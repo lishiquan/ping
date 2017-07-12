@@ -1,0 +1,12 @@
+#!/bin/bash
+#这是一个自动创建用户的脚本，重点在密码随机、通过标准输入设置密码
+#产生随机数的方法1 echo $RANDOM | md5sum | cut -c 1-8
+#产生随机数的方法2 openssh rand -base64 8
+touch user.log
+for i in `seq -w 01 05`
+  do
+    pass=`openssl rand -base64 4`
+    useradd test$i && echo $pass | passwd --stdin test$i
+    echo -e "user:test$i \t pass:$pass" >>./user.log
+  done
+
